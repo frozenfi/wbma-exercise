@@ -38,6 +38,7 @@ const mediaArray = [
 const List = () => {
   return (
     <FlatList
+      style={{padding: 10}}
       data={mediaArray}
       renderItem={({item}) => {
         return (
