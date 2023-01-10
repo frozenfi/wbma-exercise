@@ -1,8 +1,8 @@
 import {FlatList} from 'react-native';
-import React from 'react';
+import {useState, useEffect} from 'react';
 import ListItem from './ListItem';
 
-const mediaArray = [
+const mArray = [
   {
     key: '0',
     title: 'Title 1',
@@ -34,8 +34,32 @@ const mediaArray = [
     filename: 'http://placekitten.com/2039/1920',
   },
 ];
+const url =
+  'https://raw.githubusercontent.com/mattpe/wbma/master/docs/assets/test.json';
 
 const List = () => {
+  const [mediaArray, setMediaArray] = useState([]);
+
+  const loadMedia = async () => {
+    try {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+
+      const json = await response.json();
+      console.log(json);
+      setMediaArray(json);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    loadMedia();
+  }, []);
+
   return (
     <FlatList
       style={{padding: 10}}
