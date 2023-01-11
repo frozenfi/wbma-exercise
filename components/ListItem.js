@@ -16,7 +16,7 @@ const ListItem = ({singleMedia}) => {
       <View style={{flex: 1}}>
         <Image
           style={styles.imgBlock}
-          source={{uri: item.thumbnails.w160}}
+          source={{uri: item.thumbnails?.w160}}
           imageStyle={{resizeMode: 'cover'}}
         />
       </View>
