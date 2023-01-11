@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {uploadUrl} from '../utils/variables';
 
 const ListItem = ({singleMedia}) => {
   const item = singleMedia;
@@ -16,7 +17,7 @@ const ListItem = ({singleMedia}) => {
       <View style={{flex: 1}}>
         <Image
           style={styles.imgBlock}
-          source={{uri: item.thumbnails?.w160}}
+          source={{uri: uploadUrl + item.thumbnails?.w160}}
           imageStyle={{resizeMode: 'cover'}}
         />
       </View>
