@@ -8,7 +8,7 @@ const List = () => {
     <FlatList
       style={{padding: 10}}
       data={mediaArray}
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={(item) => item.title}
       renderItem={({item}) => {
         return (
           <>
