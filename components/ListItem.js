@@ -10,10 +10,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {uploadUrl} from '../utils/variables';
 
-const ListItem = ({singleMedia}) => {
+const ListItem = ({navigation, singleMedia}) => {
   const item = singleMedia;
   return (
-    <TouchableOpacity style={styles.mediaContainer}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Single', item)}
+      style={styles.mediaContainer}
+    >
       <View style={{flex: 1}}>
         <Image
           style={styles.imgBlock}
@@ -31,6 +34,7 @@ const ListItem = ({singleMedia}) => {
 
 ListItem.propTypes = {
   singleMedia: PropTypes.object.isRequired,
+  navigation: PropTypes.object,
 };
 
 export default ListItem;
