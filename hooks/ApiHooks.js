@@ -12,7 +12,7 @@ const useMedia = () => {
         json.map(async (file) => {
           const fileResponse = await fetch(baseUrl + 'media/' + file.file_id);
           const allMedia = await fileResponse.json();
-          console.log('All media..', allMedia);
+          //console.log('All media..', allMedia);
           return allMedia;
         })
       );
