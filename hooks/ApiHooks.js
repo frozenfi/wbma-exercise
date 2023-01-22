@@ -40,7 +40,19 @@ const useUser = () => {
 
     return await doFetch(baseUrl + 'users/user', options);
   };
-  return {getUserByToken};
+
+  const postUser = async (userData) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    };
+    return await doFetch(baseUrl + 'users', options);
+  };
+
+  return {getUserByToken, postUser};
 };
 
 const useMedia = () => {
