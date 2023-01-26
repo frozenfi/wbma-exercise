@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '../views/Home';
 import Single from '../views/Single';
 import Login from '../views/Login';
+import UpdateUser from '../views/UpdateUser';
 
 import Profile from '../views/Profile';
 import {MainContext} from '../contexts/MainContext';
@@ -46,6 +47,7 @@ const StackScreen = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen name="Single" component={Single} />
+          <Stack.Screen name="Update user" component={UpdateUser} />
         </>
       ) : (
         <Stack.Screen name="Login" component={Login} />
