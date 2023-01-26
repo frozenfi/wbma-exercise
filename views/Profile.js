@@ -7,12 +7,12 @@ import {uploadUrl} from '../utils/variables';
 const Profile = () => {
   const {getFilesByTag} = useTag();
   const {setIsLoggedIn, user, setUser} = useContext(MainContext);
-  const [avatar, setAvatar] = useState('');
+  const [avatar, setAvatar] = useState('http://placekitten.com/640');
 
   const loadAvatar = async () => {
     try {
       const avatarArray = await getFilesByTag('avatar_' + user.user_id);
-      setAvatar(avatarArray.pop().filename);
+      setAvatar(avatarArray?.pop()?.filename);
     } catch (e) {
       console.error('Use avatar fetch failed', e.message);
     }

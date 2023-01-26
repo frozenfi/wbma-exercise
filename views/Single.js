@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {uploadUrl} from '../utils/variables';
 
 const Single = ({route}) => {
-  //console.log(route.params);
+  
   const {
     title,
     description,
