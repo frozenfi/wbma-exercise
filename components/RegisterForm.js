@@ -1,7 +1,6 @@
-import {Text, View, TextInput, Button, Alert} from 'react-native';
+import {Card, Button, Text, Input} from '@rneui/themed';
 import {useForm, Controller} from 'react-hook-form';
 import {useUser} from '../hooks/ApiHooks';
-import React from 'react';
 
 const RegisterForm = () => {
   const {postUser} = useUser();
@@ -31,89 +30,74 @@ const RegisterForm = () => {
   };
 
   return (
-    <View>
+    <Card>
+      <Card.Title>Registration Form</Card.Title>
       <Controller
         control={control}
-        rules={{
-          required: true,
-          minLength: 3,
-        }}
+        rules={{required: true, minLength: 3}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
-            style={{width: 180}}
+          <Input
+            placeholder="Username"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            autoCapitalize="none"
-            placeholder="Username"
           />
         )}
         name="username"
       />
+
       {errors.username?.type === 'required' && <Text>is required</Text>}
       {errors.username?.type === 'minLength' && (
         <Text>min length is 3 characters</Text>
       )}
-
       <Controller
         control={control}
-        rules={{
-          required: true,
-          minLength: 5,
-        }}
+        rules={{required: true, minLength: 5}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
+            placeholder="Password"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            autoCapitalize="none"
             secureTextEntry={true}
-            placeholder="Password"
           />
         )}
         name="password"
       />
-      {errors.password && (
-        <Text>Password (minimun 5 characters) is required.</Text>
-      )}
+      {errors.password && <Text>Password (min. 5 chars) is required .</Text>}
       <Controller
         control={control}
-        rules={{
-          required: true,
-        }}
+        rules={{required: true}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
+            placeholder="Email"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            autoCapitalize="none"
-            placeholder="Email"
           />
         )}
         name="email"
       />
-      {errors.email?.type === 'required' && <Text>Email is required.</Text>}
-
+      {errors.email?.type === 'required' && <Text>is required</Text>}
       <Controller
         control={control}
         rules={{minLength: 3}}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
+            placeholder="Full name"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            autoCapitalize="none"
-            placeholder="Full name"
           />
         )}
-        name="fullname"
+        name="full_name"
       />
       {errors.full_name?.type === 'minLength' && (
         <Text>min length is 3 characters</Text>
       )}
-      <Button title="Sign in" onPress={handleSubmit(register)} />
-    </View>
+
+      <Button title="Sign in!" onPress={handleSubmit(register)} />
+    </Card>
   );
 };
-
 export default RegisterForm;

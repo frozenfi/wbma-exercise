@@ -1,11 +1,10 @@
 import {
-  StyleSheet,
   KeyboardAvoidingView,
   TouchableOpacity,
   Keyboard,
   Platform,
 } from 'react-native';
-import React, {useContext, useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -36,14 +35,9 @@ const Login = ({navigation}) => {
   }, []);
 
   return (
-    <TouchableOpacity
-      onPress={() => Keyboard.dismiss()}
-      style={{flex: 1}}
-      activeOpacity={1}
-    >
+    <TouchableOpacity onPress={() => Keyboard.dismiss()} activeOpacity={1}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
       >
         <LoginForm />
         <RegisterForm />
@@ -51,19 +45,6 @@ const Login = ({navigation}) => {
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  margin: {
-    margin: 20,
-    padding: 10,
-  },
-});
 
 Login.propTypes = {
   navigation: PropTypes.object,

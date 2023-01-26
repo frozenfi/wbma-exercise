@@ -1,34 +1,33 @@
-import React from 'react';
-import {StyleSheet, SafeAreaView, Text, Image} from 'react-native';
+import {Text, Card, ListItem} from '@rneui/themed';
 import PropTypes from 'prop-types';
-import {baseUrl, uploadUrl} from '../utils/variables';
+import {uploadUrl} from '../utils/variables';
 
-//built in prop route
 const Single = ({route}) => {
-  const {title, description, filename, time_added} = route.params;
+  //console.log(route.params);
+  const {
+    title,
+    description,
+    filename,
+    time_added: timeAdded,
+    user_id: userId,
+  } = route.params;
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>{title}</Text>
-      <Image style={styles.image} source={{uri: uploadUrl + filename}} />
-      <Text>{description}</Text>
-      <Text>{time_added}</Text>
-    </SafeAreaView>
+    <Card>
+      <Card.Title>{title}</Card.Title>
+      <Card.Divider />
+      <Card.Image source={{uri: uploadUrl + filename}} />
+      <ListItem>
+        <Text>{description}</Text>
+      </ListItem>
+      <ListItem>
+        <Text>Uploaded at: {timeAdded}</Text>
+      </ListItem>
+      <ListItem>
+        <Text>Uploaded by: {userId}</Text>
+      </ListItem>
+    </Card>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
-  },
-  image: {
-    width: 200,
-    height: 300,
-  },
-});
 
 Single.propTypes = {
   route: PropTypes.object,

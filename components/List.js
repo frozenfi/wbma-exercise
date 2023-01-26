@@ -9,7 +9,7 @@ const List = ({navigation}) => {
     <FlatList
       style={{padding: 10}}
       data={mediaArray}
-      keyExtractor={(item) => item.title}
+      keyExtractor={(item, index) => 'key' + index} //To avoid the duplicate children item
       renderItem={({item}) => {
         return (
           <>

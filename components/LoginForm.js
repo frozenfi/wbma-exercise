@@ -1,9 +1,9 @@
-import {Text, View, TextInput, Button, Alert} from 'react-native';
+import {Button, Text, Input, Card} from '@rneui/themed';
 import {useForm, Controller} from 'react-hook-form';
 import {MainContext} from '../contexts/MainContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAuthentication, useUser} from '../hooks/ApiHooks';
-import React, {useContext, useEffect} from 'react';
+import {useContext} from 'react';
 
 const LoginForm = ({navigation}) => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -31,7 +31,8 @@ const LoginForm = ({navigation}) => {
   };
 
   return (
-    <View>
+    <Card>
+      <Card.Title>Login Form</Card.Title>
       <Controller
         control={control}
         rules={{
@@ -39,7 +40,7 @@ const LoginForm = ({navigation}) => {
           minLength: 3,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -57,10 +58,11 @@ const LoginForm = ({navigation}) => {
       <Controller
         control={control}
         rules={{
-          maxLength: 100,
+          required: true,
+          minLength: 5,
         }}
         render={({field: {onChange, onBlur, value}}) => (
-          <TextInput
+          <Input
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -73,8 +75,8 @@ const LoginForm = ({navigation}) => {
       />
       {errors.password && <Text>Password (min. 5 chars) is required .</Text>}
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-    </View>
+      <Button title="Sign in" onPress={handleSubmit(onSubmit)} />
+    </Card>
   );
 };
 
