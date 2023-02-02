@@ -1,9 +1,9 @@
-import {Text, Card, ListItem} from '@rneui/themed';
+import {Text, Card, ListItem, Icon} from '@rneui/themed';
 import PropTypes from 'prop-types';
 import {uploadUrl} from '../utils/variables';
+import {View} from 'react-native';
 
 const Single = ({route}) => {
-  
   const {
     title,
     description,
@@ -16,11 +16,12 @@ const Single = ({route}) => {
       <Card.Title>{title}</Card.Title>
       <Card.Divider />
       <Card.Image source={{uri: uploadUrl + filename}} />
+
       <ListItem>
         <Text>{description}</Text>
       </ListItem>
       <ListItem>
-        <Text>Uploaded at: {timeAdded}</Text>
+        <Text>Uploaded at: {new Date(timeAdded).toLocaleString('fi-FI')}</Text>
       </ListItem>
       <ListItem>
         <Text>Uploaded by: {userId}</Text>
