@@ -72,7 +72,15 @@ const useUser = () => {
       throw new Error('checkUsername: ' + error.message);
     }
   };
-  return {getUserByToken, postUser, checkUserName, putUser};
+
+  const getUserById = async (id, token) => {
+    const options = {
+      method: 'GET',
+      headers: {'x-access-token': token},
+    };
+    return await doFetch(baseUrl + 'users/' + id, options);
+  };
+  return {getUserByToken, postUser, checkUserName, putUser, getUserById};
 };
 
 const useTag = () => {
@@ -103,6 +111,7 @@ const useMedia = () => {
       // const response = await fetch(baseUrl + 'media');
       // const json = await response.json();
       const json = await useTag().getFilesByTag(appId);
+      json.reverse();
 
       const media = await Promise.all(
         json.map(async (file) => {
@@ -138,5 +147,46 @@ const useMedia = () => {
   };
   return {mediaArray, postMedia};
 };
+const useFavourite = () => {
+  const postFavourite = async (fileId, token) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+      body: JSON.stringify({file_id: fileId}),
+    };
+    return await doFetch(baseUrl + 'favourites', options);
+  };
+  const getFavouritesByFileId = async (fileId) => {
+    return await doFetch(baseUrl + 'favourites/file/' + fileId);
+  };
+  const getFavouritesByUser = async (token) => {
+    const options = {
+      method: 'GET',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await doFetch(baseUrl + 'favourites', options);
+  };
 
-export {useMedia, useAuthentication, useUser, useTag};
+  const deleteFavourite = async (fileId, token) => {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await doFetch(baseUrl + 'favourites/file/' + fileId, options);
+  };
+  return {
+    postFavourite,
+    getFavouritesByFileId,
+    deleteFavourite,
+    getFavouritesByUser,
+  };
+};
+
+export {useMedia, useAuthentication, useUser, useTag, useFavourite};
