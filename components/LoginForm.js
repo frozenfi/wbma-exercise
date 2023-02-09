@@ -19,14 +19,16 @@ const LoginForm = ({navigation}) => {
       password: '',
     },
   });
-  const onSubmit = async (data) => {
+  const logIn = async (loginData) => {
+    console.log('Login button pressed', loginData);
     try {
-      const userData = await postLogin(data);
-      await AsyncStorage.setItem('userToken', userData.token);
-      setUser(userData.user);
+      const loginResult = await postLogin(loginData);
+      console.log('logIn', loginResult);
+      await AsyncStorage.setItem('userToken', loginResult.token);
+      setUser(loginResult.user);
       setIsLoggedIn(true);
     } catch (error) {
-      console.log('Error on onSubmit:', error);
+      console.error('logIn', error);
     }
   };
 
@@ -75,7 +77,7 @@ const LoginForm = ({navigation}) => {
       />
       {errors.password && <Text>Password (min. 5 chars) is required .</Text>}
 
-      <Button title="Sign in" onPress={handleSubmit(onSubmit)} />
+      <Button title="Sign in" onPress={handleSubmit(logIn)} />
     </Card>
   );
 };
