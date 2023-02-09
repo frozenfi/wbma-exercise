@@ -6,6 +6,7 @@ import {useRef, useState, useEffect, useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
 import {useUser, useFavourite, useTag} from '../hooks/ApiHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 const Single = ({route}) => {
   const {
@@ -82,14 +83,52 @@ const Single = ({route}) => {
       console.log('Error in disliking', e);
     }
   };
-
+  const unlock = async () => {
+    try {
+      await ScreenOrientation.unlockAsync();
+    } catch (error) {
+      console.error('Error in screen orientation unlock', error.message);
+    }
+  };
+  const lock = async () => {
+    try {
+      await ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      );
+    } catch (error) {
+      console.error('Error in screen orientation lock', error.message);
+    }
+  };
+  const showVideoInFullScreen = async () => {
+    try {
+      await video.current.presentFullscreenPlayer();
+    } catch (error) {
+      console.error('showVideoInFullScreen', error.message);
+    }
+  };
   useEffect(() => {
     getOwnerInfo();
     getAvatar();
+    getLikes();
+    unlock();
+
+    const orientSub = ScreenOrientation.addOrientationChangeListener((evt) => {
+      console.log('orientation', evt);
+      if (evt.orientationInfo.orientation > 2) {
+        if (video.current) showVideoInFullScreen();
+      }
+    });
+
+    return () => {
+      ScreenOrientation.removeOrientationChangeListener(orientSub);
+      lock();
+    };
   }, []);
+
   useEffect(() => {
     getLikes();
   }, [userLike]);
+
   return (
     <Card>
       <Card.Title>{title}</Card.Title>

@@ -6,6 +6,7 @@ import {useTag} from '../hooks/ApiHooks';
 import {uploadUrl} from '../utils/variables';
 import {SpeedDial} from '@rneui/themed';
 import {color} from '@rneui/base';
+import PropTypes from 'prop-types';
 const Profile = ({navigation}) => {
   const {getFilesByTag} = useTag();
   const {setIsLoggedIn, user, setUser} = useContext(MainContext);
@@ -72,11 +73,22 @@ const Profile = ({navigation}) => {
           title="Logout"
           onPress={logout}
         />
+        <SpeedDial.Action
+          iconContainerStyle={{backgroundColor: 'white'}}
+          icon={{name: 'folder-outline', type: 'ionicon'}}
+          title="MyFiles"
+          onPress={() => {
+            navigation.navigate('MyFiles');
+          }}
+        />
       </SpeedDial>
     </Card>
   );
 };
 
+Profile.propTypes = {
+  navigation: PropTypes.object,
+};
 export default Profile;
 
 {

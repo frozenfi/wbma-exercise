@@ -8,6 +8,8 @@ import Login from '../views/Login';
 import Upload from '../views/Upload';
 import UpdateUser from '../views/UpdateUser';
 import Profile from '../views/Profile';
+import MyFiles from '../views/MyFiles';
+import Modify from '../views/Modify';
 import {MainContext} from '../contexts/MainContext';
 import {Icon} from '@rneui/themed';
 
@@ -53,6 +55,8 @@ const StackScreen = () => {
           />
           <Stack.Screen name="Single" component={Single} />
           <Stack.Screen name="Update user" component={UpdateUser} />
+          <Stack.Screen name="MyFiles" component={MyFiles} />
+          <Stack.Screen name="Modify" component={Modify} />
         </>
       ) : (
         <Stack.Screen name="Login" component={Login} />

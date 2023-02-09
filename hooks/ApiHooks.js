@@ -102,15 +102,19 @@ const useTag = () => {
   return {getFilesByTag, postTag};
 };
 
-const useMedia = () => {
+const useMedia = (myFilesOnly) => {
   const [mediaArray, setMediaArray] = useState([]);
-  const {update} = useContext(MainContext);
+  const {update, user} = useContext(MainContext);
 
   const loadMedia = async () => {
     try {
       // const response = await fetch(baseUrl + 'media');
       // const json = await response.json();
-      const json = await useTag().getFilesByTag(appId);
+      let json = await useTag().getFilesByTag(appId);
+      if (myFilesOnly) {
+        json = json.filter((file) => file.user_id === user.user_id);
+      }
+
       json.reverse();
 
       const media = await Promise.all(
@@ -145,7 +149,27 @@ const useMedia = () => {
       throw new Error('postUpload: ' + error.message);
     }
   };
-  return {mediaArray, postMedia};
+  const putMedia = async (fileId, data, token) => {
+    const options = {
+      method: 'PUT',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await doFetch(baseUrl + 'media/' + fileId, options);
+  };
+  const deleteMedia = async (fileId, token) => {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await doFetch(baseUrl + 'media/' + fileId, options);
+  };
+  return {mediaArray, postMedia, deleteMedia, putMedia};
 };
 const useFavourite = () => {
   const postFavourite = async (fileId, token) => {
